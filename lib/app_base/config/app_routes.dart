@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_provider/features/app_setting/app_setting.dart';
-import '../../features/home_screen/screens/home_screen.dart';
+import 'package:flutter_provider/features/home_screen/home_screen.dart';
 import '../utils/app_utils.dart';
 
 class AppRoutesMain {
@@ -12,10 +11,8 @@ class AppRoutesMain {
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case home:
-        return RouteUtilsTemp.createPage(child: HomeScreen());
-      case setting:
-        return RouteUtilsTemp.createPage(child: const AppSetting());
+      case splash:
+        return RouteUtilsTemp.createPage(child: const HomeScreen());
 
       default:
         return RouteUtilsTemp.errorRoute();
