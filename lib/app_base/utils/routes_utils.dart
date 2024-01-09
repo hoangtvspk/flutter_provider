@@ -25,6 +25,21 @@ abstract class RouteUtils {
 }
 
 abstract class RouteUtilsTemp {
+  static Route createPageProvider<T extends ChangeNotifier>({
+    required T Function(BuildContext context) provider,
+    required Widget child,
+    RouteSettings? settings,
+  }) {
+    return MaterialPageRoute(
+      builder: (context) => ChangeNotifierProvider(
+        create: (_) => provider.call(context),
+        child: child,
+      ),
+      settings: settings,
+      fullscreenDialog: true,
+    );
+  }
+
   static Route createPage({
     required Widget child,
     RouteSettings? settings,

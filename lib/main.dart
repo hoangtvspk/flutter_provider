@@ -2,35 +2,40 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_base/config/app_routes.dart';
-import '../app_base/constants/home_widget_constants.dart';
 import '../app_base/utils/app_utils.dart';
 import 'app_base/config/app_config.dart';
 import 'common/providers/theme_provider.dart';
-import 'features/home_screen/screens/home_screen.dart';
+import 'features/home_screen/view/home_screen.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  bool isDark = pref.getBool("isDark") ?? false;
+  runApp(MyApp(isDark: isDark));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isDark;
+  const MyApp({Key? key, required this.isDark}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: AppSize.designSize,
-      child: AppView(),
+      child: AppView(isDark: isDark),
       builder: (context, child) => child!,
     );
   }
 }
 
 class AppView extends StatefulWidget {
-  const AppView({Key? key}) : super(key: key);
+  final bool isDark;
+  const AppView({Key? key, required this.isDark}) : super(key: key);
 
   @override
   State<AppView> createState() => _AppViewState();
@@ -49,29 +54,15 @@ class _AppViewState extends State<AppView> {
     super.dispose();
   }
 
-  Future<void> _initWidgetData() async {
-    // var value = await AppService().loadWidgetData();
-    // await HomeWidget.saveWidgetData<String>(
-    //     HomeWidgetKeyConstant.getData, jsonEncode(value.data));
-    // await HomeWidget.updateWidget(
-    //   name: HomeWidgetConstant.androidSmallWidgetProvider,
-    //   androidName: HomeWidgetConstant.androidSmallWidgetProvider,
-    //   iOSName: HomeWidgetConstant.iosWidgetName,
-    // );
-    // await HomeWidget.updateWidget(
-    //     name: HomeWidgetConstant.androidLargeWidgetProvider,
-    //     androidName: HomeWidgetConstant.androidLargeWidgetProvider,
-    //     iOSName: HomeWidgetConstant.iosWidgetName);
-  }
+  Future<void> _initWidgetData() async {}
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => ThemeProvider(),
+          create: (ctx) => ThemeProvider(widget.isDark),
         ),
-        //Your other providers goes here...
       ],
       child: Consumer<ThemeProvider>(
         builder: (ctx, themeObject, _) => MaterialApp(
@@ -101,34 +92,5 @@ class _AppViewState extends State<AppView> {
         ),
       ),
     );
-    // MaterialApp(
-    //   scrollBehavior: const ScrollBehaviorModified(),
-    //   navigatorKey: navigatorKey,
-    //   debugShowCheckedModeBanner: false,
-    //   initialRoute: AppRoutesMain.initial,
-    //   onGenerateRoute: AppRoutesMain.onGenerateRoute,
-    //   themeMode: ThemeMode.light,
-    //   theme: AppTheme.light,
-    //   darkTheme: AppTheme.dark,
-    //   home: const HomeScreen(),
-
-    //   // builder: (builderContext, child) {
-    //   //   return MediaQuery(
-    //   //     data: MediaQuery.of(builderContext)
-    //   //         .copyWith(textScaleFactor: 1.0, boldText: false),
-    //   //     child: BlocListener<AuthenticationBloc, AuthenticationState>(
-    //   //       listenWhen: ((previous, current) {
-    //   //         return previous.authStatus != current.authStatus;
-    //   //       }),
-    //   //       listener: (context, state) {
-    //   //         _initWidgetData();
-    //   //         _navigator.pushNamedAndRemoveUntil(
-    //   //             AppRoutesMain.dashBoard, (route) => false);
-    //   //       },
-    //   //       child: child,
-    //   //     ),
-    //   //   );
-    //   // }
-    // );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_provider/features/app_setting/app_setting.dart';
-import '../../features/home_screen/screens/home_screen.dart';
+import '../../features/home_screen/view/home_screen.dart';
+import '../../features/home_screen/viewmodel/post_viewmodel.dart';
 import '../utils/app_utils.dart';
 
 class AppRoutesMain {
@@ -13,9 +14,10 @@ class AppRoutesMain {
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case home:
-        return RouteUtilsTemp.createPage(child: HomeScreen());
+        return RouteUtilsTemp.createPageProvider(
+            provider: (context) => PostViewModel(), child: HomeScreen());
       case setting:
-        return RouteUtilsTemp.createPage(child: const AppSetting());
+        return RouteUtilsTemp.createPage(child: AppSetting());
 
       default:
         return RouteUtilsTemp.errorRoute();

@@ -1,6 +1,6 @@
 part of '../rest_api.dart';
 
-abstract class Api {
+class Api {
   Dio get _dio => _initDio();
   Dio _initDio() {
     final Dio dio = Dio();
@@ -41,7 +41,7 @@ abstract class Api {
     return dio;
   }
 
-  Future<BaseResponse> get<T>(
+  Future<Response<dynamic>?> get<T>(
     String endpoint, {
     Map<String, dynamic>? query,
     Options? options,
@@ -49,18 +49,20 @@ abstract class Api {
     ProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _dio.get(
+      final responseData = await _dio.get(
         AppConfig.instance.env.baseUrl + endpoint,
         queryParameters: query,
         options: options,
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
-      if (response.data is Map && (response.data as Map).length == 1) {
-        return BaseResponse.fromJson(response.data,
-            codeSuccess: response.statusCode!);
-      }
-      return BaseResponse.success(response.data);
+      // BaseResponse response = BaseResponse(true, 200, "abc", responseData);
+      // if (response.data is Map && (response.data as Map).length == 1) {
+      //   return BaseResponse.fromJson(response.data,
+      //       codeSuccess: responseData.statusCode!);
+      // }
+      // return BaseResponse.success(response.data);
+      return responseData;
     } on DioException catch (e) {
       if (e.response != null) {
         //Check status code if status code is 401, access token expired.
@@ -77,18 +79,18 @@ abstract class Api {
               onReceiveProgress: onReceiveProgress,
             );
           } else {
-            return BaseResponse.error(resRefresh.message);
+            // return BaseResponse.error(resRefresh.message);
+            return e.response;
           }
         }
-        return BaseResponse.error(e.response!.statusMessage,
-            code: e.response!.statusCode!);
+        return e.response;
       } else {
-        return BaseResponse.error(e.message);
+        return e.response;
       }
     }
   }
 
-  Future<BaseResponse> post<T>(
+  Future<Response<dynamic>?> post<T>(
     String endpoint, {
     Map<String, dynamic>? query,
     Map<String, dynamic>? data,
@@ -105,11 +107,12 @@ abstract class Api {
         cancelToken: cancelToken,
         onReceiveProgress: onReceiveProgress,
       );
-      if (response.data is Map && (response.data as Map).length == 1) {
-        return BaseResponse.fromJson(response.data,
-            codeSuccess: response.statusCode!);
-      }
-      return BaseResponse.success(response.data);
+      // if (response.data is Map && (response.data as Map).length == 1) {
+      //   return BaseResponse.fromJson(response.data,
+      //       codeSuccess: response.statusCode!);
+      // }
+      // return BaseResponse.success(response.data);
+      return response;
     } on DioException catch (e) {
       if (e.response != null) {
         //Check status code if status code is 401, access token expired.
@@ -127,17 +130,15 @@ abstract class Api {
               onReceiveProgress: onReceiveProgress,
             );
           } else {
-            return BaseResponse.error(resRefresh.message);
+            return e.response;
           }
         }
         if (e.response!.statusCode == 402) {
-          return BaseResponse.error(e.response!.statusMessage, code: 402);
+          return e.response;
         }
-        return BaseResponse.error(e.response!.statusMessage,
-            code: e.response!.statusCode!);
+        return e.response;
       } else {
-        return BaseResponse.error(e.response!.statusMessage,
-            code: e.response!.statusCode!);
+        return e.response;
       }
     }
   }
