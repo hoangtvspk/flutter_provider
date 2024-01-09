@@ -17,30 +17,23 @@ class Env {
   final int connectionTimeout;
   final int receiveTimeout;
   DeviceModel? device;
-  final String kakaoTalk;
-  final String kakaoNativeAppKey;
-  final String kakaoJavaScriptAppKey;
-  final String kakaoRestApiKey;
-  Env(
-      {required this.envType,
-      required this.debug,
-      required this.external,
-      required this.pageSize,
-      required this.devicePreview,
-      required this.version,
-      required this.dateFormat,
-      required this.clientID,
-      required this.baseUrl,
-      required this.siteUrl,
-      required this.statementSyncTime,
-      required this.localTimeZone,
-      required this.connectionTimeout,
-      required this.receiveTimeout,
-      this.device,
-      required this.kakaoTalk,
-      required this.kakaoNativeAppKey,
-      required this.kakaoJavaScriptAppKey,
-      required this.kakaoRestApiKey});
+  Env({
+    required this.envType,
+    required this.debug,
+    required this.external,
+    required this.pageSize,
+    required this.devicePreview,
+    required this.version,
+    required this.dateFormat,
+    required this.clientID,
+    required this.baseUrl,
+    required this.siteUrl,
+    required this.statementSyncTime,
+    required this.localTimeZone,
+    required this.connectionTimeout,
+    required this.receiveTimeout,
+    this.device,
+  });
 
   factory Env.dev() {
     return Env(
@@ -52,16 +45,12 @@ class Env {
       version: '0.0.1',
       dateFormat: 'HH:mm, MMM dd yyyy',
       clientID: '',
-      baseUrl: 'https://api.borra.today/',
-      siteUrl: 'https://borra.today/',
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
+      siteUrl: 'https://jsonplaceholder.typicode.com/',
       statementSyncTime: "2021-01-01",
       localTimeZone: true,
       connectionTimeout: 10000,
       receiveTimeout: 10000,
-      kakaoTalk: "http://pf.kakao.com/_ymuIC/chat",
-      kakaoNativeAppKey: "e590f461438b4547038b9c245d8bcca5",
-      kakaoJavaScriptAppKey: "f4a39a45719d2481b1d935234400e4fb",
-      kakaoRestApiKey: "ad3ccc92ffada7d40350cac19f77c55a",
     );
   }
 
@@ -75,16 +64,12 @@ class Env {
       version: '0.0.1',
       dateFormat: 'HH:mm, MMM dd yyyy',
       clientID: '',
-      baseUrl: 'https://api.borra.today/',
-      siteUrl: 'https://borra.today/',
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
+      siteUrl: 'https://jsonplaceholder.typicode.com/',
       statementSyncTime: "2021-01-01",
       localTimeZone: true,
       connectionTimeout: 10000,
       receiveTimeout: 10000,
-      kakaoTalk: "http://pf.kakao.com/_ymuIC/chat",
-      kakaoNativeAppKey: "e590f461438b4547038b9c245d8bcca5",
-      kakaoJavaScriptAppKey: "f4a39a45719d2481b1d935234400e4fb",
-      kakaoRestApiKey: "ad3ccc92ffada7d40350cac19f77c55a",
     );
   }
 
@@ -98,16 +83,12 @@ class Env {
       version: '0.0.1',
       dateFormat: 'HH:mm, MMM dd yyyy',
       clientID: '',
-      baseUrl: 'https://api.borra.today/',
-      siteUrl: 'https://borra.today/',
+      baseUrl: 'https://jsonplaceholder.typicode.com/',
+      siteUrl: 'https://jsonplaceholder.typicode.com/',
       statementSyncTime: "2021-01-01",
       localTimeZone: true,
       connectionTimeout: 10000,
       receiveTimeout: 10000,
-      kakaoTalk: "http://pf.kakao.com/_ymuIC/chat",
-      kakaoNativeAppKey: "e590f461438b4547038b9c245d8bcca5",
-      kakaoJavaScriptAppKey: "f4a39a45719d2481b1d935234400e4fb",
-      kakaoRestApiKey: "ad3ccc92ffada7d40350cac19f77c55a",
     );
   }
   // Future<void> setDevice() async {

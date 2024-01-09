@@ -11,6 +11,7 @@ import 'package:logger/logger.dart';
 
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:provider/provider.dart';
 
 import '../config/app_config.dart';
 import '../generated/locale_keys.g.dart';
